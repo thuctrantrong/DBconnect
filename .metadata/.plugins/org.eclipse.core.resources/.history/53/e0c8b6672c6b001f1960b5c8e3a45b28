@@ -1,0 +1,78 @@
+package vn.iostar.dao.ipl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import vn.iostar.configs.DBconnect;
+import vn.iostar.dao.iuserdao;
+import vn.iostar.model.Usermodel;
+
+public class USerDaoImpl extends DBconnect implements iuserdao {
+
+	public Connection conn = null;
+	public PreparedStatement ps = null;
+	public ResultSet rs = null;
+
+	@Override
+	public List<Usermodel> findAll(){
+		String sql = "select * from users";
+		List<Usermodel> list = new ArrayList<>();
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+		while (rs.next()) {
+			list.add(null);
+		}
+		
+		}catch(Exception e) {
+			
+		}
+		
+		return list; 
+	}
+
+	@Override
+	public Usermodel findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insert(Usermodel user) {
+
+		String insertsql = "INSERT INTO Table_1 (id, username, password, images, fullname) VALUES (?, ?, ?, ?, ?);";
+		try {
+			conn = super.getConnection();
+			ps =  conn.prepareStatement(insertsql);
+			if (conn == null || conn.isClosed()) {
+                System.out.println("Failed to connect to database.");
+                return;  // Thoát nếu không thể kết nối
+            }
+			ps.setInt(1, user.getId());  
+			ps.setString(2, user.getUsername());         
+            ps.setString(3, user.getPassword());    
+            ps.setString(4, user.getImages());        
+            ps.setString(5, user.getUsername());
+            ps.executeUpdate();
+            
+            System.out.println("User inserted successfully!");
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	 public static void main(String[] args) {
+		 USerDaoImpl usdi = new USerDaoImpl();
+		 Usermodel user = new Usermodel(1, "Thuc", "123", "profile.jpg", "Tran Trong Thuc"); 
+		 usdi.insert(user);
+		 
+		 List<Usermodel> list = usdi.findAll();
+		 System.out.println(list);
+		
+	    }
+
+}

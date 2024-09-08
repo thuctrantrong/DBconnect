@@ -1,0 +1,5 @@
+package vn.iostar.dao.ipl;
+
+public interface iuserdao {
+
+}
