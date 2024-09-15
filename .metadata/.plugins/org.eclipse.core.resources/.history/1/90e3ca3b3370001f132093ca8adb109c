@@ -1,0 +1,9 @@
+package vn.iostar.service;
+
+import vn.iostar.model.Usermodel;
+
+public interface UserService {
+
+	Usermodel login(String username, String password);
+	Usermodel findByUserName (String username);
+}

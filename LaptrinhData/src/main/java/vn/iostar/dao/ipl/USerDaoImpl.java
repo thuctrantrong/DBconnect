@@ -1,6 +1,5 @@
 package vn.iostar.dao.ipl;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,34 +17,39 @@ public class USerDaoImpl extends DBconnect implements iuserdao {
 	public ResultSet rs = null;
 
 	@Override
-	public List<Usermodel> findAll(){
-		String sql = "select * from Table_1";
+	public List<Usermodel> findAll() {
+		String sql = "select * from Table_info";
 		List<Usermodel> list = new ArrayList<>();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-		while (rs.next()) {
-			String userId = rs.getString("id");
-            String username = rs.getString("username");
-            String password = rs.getString("password");
-            String imagines = rs.getString("imagines");
-            String fullname = rs.getString("fullname");
-            Usermodel user = new Usermodel(userId,username,password,imagines,fullname);
-	        list.add(user);
+			while (rs.next()) {
+				String userId = rs.getString("id");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String imagines = rs.getString("imagines");
+				String fullname = rs.getString("fullname");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				int roleid = rs.getInt("roleid");
+				String createDate = rs.getString("createDate");
+				Usermodel user = new Usermodel(userId, username, password, imagines, fullname, email, phone, roleid,
+						createDate);
+				list.add(user);
+			}
+
+		} catch (Exception e) {
+
 		}
-		
-		}catch(Exception e) {
-			
-		}
-		
-		return list; 
+
+		return list;
 	}
 
 	@Override
 	public Usermodel findById(int id) {
-		String findsql = "select * from Table_1 where id = ?";			
-		Usermodel user = null ; 
+		String findsql = "select * from Table_info where id = ?";
+		Usermodel user = null;
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(findsql);
@@ -53,59 +57,83 @@ public class USerDaoImpl extends DBconnect implements iuserdao {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				 String userId = rs.getString("id");
-                 String username = rs.getString("username");
-                 String password = rs.getString("password");
-                 String imagines = rs.getString("imagines");
-                 String fullname = rs.getString("fullname");
-				user = new Usermodel(userId,username,password,imagines,fullname);
+				String userId = rs.getString("id");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String imagines = rs.getString("imagines");
+				String fullname = rs.getString("fullname");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				int roleid = rs.getInt("roleid");
+				String createDate = rs.getString("createDate");
+				user = new Usermodel(userId, username, password, imagines, fullname, email, phone, roleid, createDate);
 			}
 		} catch (Exception e) {
-			
+
 		}
-		return  user ;  
+		return user;
 	}
 
 	@Override
-	public void insert(Usermodel user) {
+	public boolean insert(Usermodel user) {
 
-		String insertsql = "INSERT INTO Table_1 (id, username, password, imagines, fullname) VALUES (?, ?, ?, ?, ?);";
+		String insertsql = "INSERT INTO Table_info (username, password, imagines, fullname,email,phone,roleid,createDate) VALUES ( ?, ?, ?, ?,?,?,?,?);";
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(insertsql);
-			ps.setString(1, user.getId());   
-			ps.setString(2, user.getUsername());         
-            ps.setString(3, user.getPassword());    
-            ps.setString(4, user.getImagines());        
-            ps.setString(5, user.getFullname());
-			
-            ps.executeUpdate();
-
-            System.out.println("User inserted successfully!");
-		}catch(Exception ex)
-		{
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getImagines());
+			ps.setString(4, user.getFullname());
+			ps.setString(5, user.getEmail());
+			ps.setString(6, user.getPhone());
+			ps.setInt(7, user.getRoleid());
+			ps.setString(8, user.getCreateDate());
+			ps.executeUpdate();
+			System.out.println("User inserted successfully!");
+			return true ;
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		return false;
 	}
-	 public static void main(String[] args) {
-		 USerDaoImpl usdi = new USerDaoImpl();
-		 Usermodel user = new Usermodel("3", "Thuc", "123", "", "Tran Trong Thuc"); 
-		 usdi.insert(user);
-		 Usermodel userfind = usdi.findById(3);
-		 if (userfind != null)
-		 {
-			 System.out.println("User found: " + userfind.toString());
-		 }
-		 else 
-		 {
-			 System.out.println("User not found");
-		 }
-		 
-		 List<Usermodel> list = usdi.findAll();
-		 for (Usermodel userlist : list) {
-	            System.out.println(userlist);
-	        }
-		 
-	    }
+	
+	  public static void main(String[] args) { 
+		  
+
+  
+	  }
+	 
+
+	@Override
+	public Usermodel findByUserName(String usernamefind) {
+		String findsql = "select * from Table_info where username = ?";
+
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(findsql);
+			ps.setString(1, usernamefind);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String imagines = rs.getString("imagines");
+				String fullname = rs.getString("fullname");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				int roleid = rs.getInt("roleid");
+				String createDate = rs.getString("createDate");
+				Usermodel user = new Usermodel(username, password, imagines, fullname, email, phone, roleid,
+						createDate);
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return null;
+	}
 
 }

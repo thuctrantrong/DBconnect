@@ -1,0 +1,64 @@
+package vn.iostar.controller;
+
+import java.io.IOException;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import vn.iostar.model.Usermodel;
+import vn.iostar.service.UserService;
+import vn.iostar.service.ipl.UserServiceipl;
+
+@WebServlet(urlPatterns= { "/register"})
+public class Register extends HttpServlet{
+	UserService service = new UserServiceipl();
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String id = req.getParameter("id");
+		String username = req.getParameter("username");
+	    String password = req.getParameter("password");
+	    String imagines = req.getParameter("imagines");
+	    String fullname = req.getParameter("fullname");
+	    String email = req.getParameter("email");
+	    String phone = req.getParameter("phone");
+	    String roleid = req.getParameter("roleid");
+	    String createDate = req.getParameter("createDate");
+
+		Usermodel user = service.registeruser(id,username, password,imagines,fullname,email,phone,roleid,createDate);
+	    
+	    if (!(user.finduserid(username))) {
+	    	boolean success = user.register(username, password);
+	    	if (success) {
+		        resp.sendRedirect("Hello.jsp"); 
+		    } else {
+		        req.setAttribute("errorMessage", "Registration failed.");
+		        RequestDispatcher rd = req.getRequestDispatcher("register.jsp");
+		        rd.forward(req, resp);
+		    }
+	    	
+	    } else {
+	        req.setAttribute("errorMessage", "Registration failed.");
+	        RequestDispatcher rd = req.getRequestDispatcher("register.jsp");
+	        rd.forward(req, resp);
+	    }
+	}
+	
+	
+	
+}

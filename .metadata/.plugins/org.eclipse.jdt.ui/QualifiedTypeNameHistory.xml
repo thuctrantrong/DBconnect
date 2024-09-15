@@ -4,11 +4,16 @@
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="java.lang.Exception"/>
-    <fullyQualifiedTypeName name="vn.iostar.dao.ipl.USerDaoImpl"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
     <fullyQualifiedTypeName name="java.beans.Statement"/>
     <fullyQualifiedTypeName name="vn.iostar.model.Usermodel"/>
+    <fullyQualifiedTypeName name="vn.iostar.dao.iuserdao"/>
+    <fullyQualifiedTypeName name="vn.iostar.dao.ipl.USerDaoImpl"/>
+    <fullyQualifiedTypeName name="org.eclipse.tags.shaded.org.apache.bcel.classfile.Constant"/>
+    <fullyQualifiedTypeName name="vn.iostar.service.UserService"/>
+    <fullyQualifiedTypeName name="vn.iostar.service.ipl.UserServiceipl"/>
+    <fullyQualifiedTypeName name="jakarta.servlet.http.HttpServlet"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
 </qualifiedTypeNameHistroy>

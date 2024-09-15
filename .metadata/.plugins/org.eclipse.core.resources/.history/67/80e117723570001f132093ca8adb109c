@@ -1,0 +1,45 @@
+package vn.iostar.service.ipl;
+
+import vn.iostar.model.Usermodel;
+import vn.iostar.service.UserService;
+import vn.iostar.dao.iuserdao;
+import vn.iostar.dao.ipl.USerDaoImpl;
+
+public class UserServiceipl implements UserService {
+
+	iuserdao userDao = new USerDaoImpl();
+
+	@Override
+	public Usermodel login(String username, String password) {
+		Usermodel user = this.findbyusername(username);
+		System.out.println("DB password: " + user.getPassword());
+		System.out.println("Input password: " + password);
+
+		
+		  if (password.trim() != user.getPassword().trim()) { 
+			  
+			  return user; 
+			  
+		  }
+		  
+		  return null;
+		 
+	}
+
+	@Override
+	public Usermodel findbyusername(String username) {
+		// TODO Auto-generated method stub
+		return userDao.findByUserName(username);
+	}
+
+	public static void main(String[] args) {
+	 	
+		UserServiceipl userDao = new UserServiceipl();
+        System.out.println(userDao.login("a","a"));
+        //List<UserModel> list = userDao.findAll();
+       // for (UserModel user : list) {
+       //     System.out.println(user);
+       // }
+    }
+
+}

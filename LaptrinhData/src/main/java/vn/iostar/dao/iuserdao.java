@@ -1,15 +1,19 @@
-package vn.iostar.dao;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+	package vn.iostar.dao;
 
-import vn.iostar.model.Usermodel;
+	import java.io.IOException;
+	import java.sql.SQLException;
+	import java.util.List;
 
-public interface iuserdao {
-	List<Usermodel> findAll()  throws IOException, SQLException;
+	import vn.iostar.model.Usermodel;
 
-	Usermodel findById(int id);
+	public interface iuserdao {
+		List<Usermodel> findAll()  throws IOException, SQLException;
 
-	void insert(Usermodel user);
+		Usermodel findById(int id);
+
+		boolean insert(Usermodel user);
+	
+		Usermodel findByUserName (String username) ;
+
 }
